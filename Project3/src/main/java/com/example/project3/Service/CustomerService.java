@@ -46,7 +46,7 @@ public class CustomerService {
         customer.setPhoneNumber(customerDTO.getPhoneNumber());
 
 
-        user.setCustomer(customer);
+        customer.setMyUser(user);
 
         authRepository.save(user);
         customerRepository.save(customer);
@@ -84,8 +84,7 @@ public class CustomerService {
         if (customer==null){
             throw new ApiException("the customer is not found");
         }
-        customerRepository.delete(customer);
-
+        authRepository.delete(customer.getMyUser());
     }
 
 

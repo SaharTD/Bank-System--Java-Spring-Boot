@@ -16,30 +16,17 @@ public class MyUserDetailsService implements UserDetailsService {
 
     private final AuthRepository authRepository;
 
-//    @Override
-//    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
-//
-//        /// check database for username or email
-//        MyUser user = authRepository.findMyUserByUsernameOrEmail(identifier, identifier);
-//        if (user == null) {
-//            throw new ApiException("wrong username / email or password");
-//        }
-//        return user;
-//    }
-
-
-
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String identifier) throws UsernameNotFoundException {
 
-        /// check database
-        MyUser user =authRepository.findMyUserByUsername(username);
-        if (user==null){
-
-            throw  new ApiException("wrong username or password");
+        /// check database for username or email
+        MyUser user = authRepository.findMyUserByUsernameOrEmail(identifier, identifier);
+        if (user == null) {
+            throw new ApiException("wrong username / email or password");
         }
         return user;
     }
+
 
 
 }

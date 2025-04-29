@@ -57,6 +57,7 @@ public class Configuration {
                 .requestMatchers("/api/v1/emp/register").permitAll()
                 .requestMatchers("/api/v1/customer/register").permitAll()
                 .requestMatchers("/api/v1/customer/get-customers").hasAuthority("EMPLOYEE")
+                .requestMatchers("/api/v1/account/get-one-account").hasAuthority("EMPLOYEE")
                 .requestMatchers("/api/v1/customer/update").hasAuthority("CUSTOMER")
                 .requestMatchers("/api/v1/customer/delete").hasAuthority("CUSTOMER")
                 .requestMatchers("/api/v1/account/get-my-accounts").hasAuthority("CUSTOMER")
@@ -69,9 +70,6 @@ public class Configuration {
                 .requestMatchers("/api/v1/emp/delete").hasAuthority("EMPLOYEE")
                 .requestMatchers("/api/v1/emp/activate").hasAuthority("EMPLOYEE")
                 .requestMatchers("/api/v1/emp/block").hasAuthority("EMPLOYEE")
-//                .requestMatchers("/api/v1/auth/delete").hasAuthority("User")
-//                .requestMatchers("/api/v1/todo/get-all").hasAuthority("ADMIN")
-//                .requestMatchers("/api/v1/auth/get-users").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 /// any endpoints that are mentioned has to be authenticated to be accuses
                 .and()

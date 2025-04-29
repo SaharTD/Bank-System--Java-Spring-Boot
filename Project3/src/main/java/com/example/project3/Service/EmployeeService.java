@@ -49,7 +49,7 @@ public class EmployeeService {
         employee.setSalary(employeeDTO.getSalary());
 
 
-        user.setEmployee(employee);
+        employee.setMyUser(user);
 
         authRepository.save(user);
         employeeRepository.save(employee);
@@ -91,7 +91,7 @@ public class EmployeeService {
             throw new ApiException("the employee is not found");
         }
 
-        employeeRepository.delete(employee);
+        authRepository.delete(employee.getMyUser());
 
 
     }
@@ -118,7 +118,9 @@ public class EmployeeService {
       if (account.getCustomer().getId()!=customerId){
           throw new ApiException("the account does not belong to customer");
       }
-
+      if (account.getIsActive()){
+          throw new ApiException("the account is already active ");
+      }
 
       account.setIsActive(true);
       accountRepository.save(account);
@@ -144,6 +146,10 @@ public class EmployeeService {
 
         if (account.getCustomer().getId()!=customerId){
             throw new ApiException("the account does not belong to customer");
+        }
+
+        if (!account.getIsActive()){
+            throw new ApiException("the account is already blocked ");
         }
 
 

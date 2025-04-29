@@ -27,7 +27,7 @@ public class Account {
     private Integer balance;
 
 
-    @Column(columnDefinition = "boolean not null")
+    @Column(columnDefinition = "boolean")
     private Boolean isActive;
 
 

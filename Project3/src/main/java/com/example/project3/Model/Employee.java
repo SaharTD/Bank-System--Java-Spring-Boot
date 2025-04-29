@@ -27,5 +27,6 @@ public class Employee {
 
     @OneToOne
     @MapsId
+    @JsonIgnore
     private MyUser myUser;
 }

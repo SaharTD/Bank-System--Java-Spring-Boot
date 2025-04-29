@@ -52,14 +52,12 @@ public class MyUser implements UserDetails {
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "myUser")
     @PrimaryKeyJoinColumn
-    @JsonIgnore
     private Employee employee;
 
 
 
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "myUser")
     @PrimaryKeyJoinColumn
-    @JsonIgnore
     private Customer customer;
 
 

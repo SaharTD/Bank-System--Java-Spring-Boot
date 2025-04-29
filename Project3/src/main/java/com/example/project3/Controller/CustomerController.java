@@ -5,6 +5,7 @@ import com.example.project3.DTO.CustomerDTO;
 import com.example.project3.DTO.EmployeeDTO;
 import com.example.project3.Model.Customer;
 import com.example.project3.Model.Employee;
+import com.example.project3.Model.MyUser;
 import com.example.project3.Service.CustomerService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class CustomerController {
 
 
     @GetMapping("get-customers")
-    public ResponseEntity getAllCustomers (@AuthenticationPrincipal Employee employee){
+    public ResponseEntity getAllCustomers (@AuthenticationPrincipal MyUser employee){
         return ResponseEntity.status(200).body(customerService.getAllCustomers(employee.getId()));
     }
 
@@ -37,7 +38,7 @@ public class CustomerController {
 
 
     @PutMapping("update")
-    public ResponseEntity updateCustomer(@AuthenticationPrincipal Customer customer , @RequestBody CustomerDTO customerDTO ){
+    public ResponseEntity updateCustomer(@AuthenticationPrincipal MyUser customer , @RequestBody CustomerDTO customerDTO ){
         customerService.updateCustomer(customer.getId(),customerDTO);
         return ResponseEntity.status(200).body(new ApiResponse("the customer has been updated successfully "));
     }
@@ -45,7 +46,7 @@ public class CustomerController {
 
 
     @DeleteMapping("delete")
-    public ResponseEntity deleteCustomer(@AuthenticationPrincipal Customer customer){
+    public ResponseEntity deleteCustomer(@AuthenticationPrincipal MyUser customer){
         customerService.deleteCustomer(customer.getId());
         return ResponseEntity.status(200).body(new ApiResponse("the customer has been deleted successfully "));
     }

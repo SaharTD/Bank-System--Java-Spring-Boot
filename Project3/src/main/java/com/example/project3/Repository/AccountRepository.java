@@ -12,6 +12,8 @@ public interface AccountRepository extends JpaRepository<Account,Integer> {
 
     Account findAccountById(Integer id);
 
-    Account findAccountByCustomer_Id(Integer customerId);
+   List <Account> findAccountByCustomer(Customer customer);
+    Account findAccountByIdAndCustomer(Integer id,Customer customer);
+
 
     }

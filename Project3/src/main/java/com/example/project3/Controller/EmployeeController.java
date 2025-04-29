@@ -4,6 +4,7 @@ package com.example.project3.Controller;
 import com.example.project3.Api.ApiResponse;
 import com.example.project3.DTO.EmployeeDTO;
 import com.example.project3.Model.Employee;
+import com.example.project3.Model.MyUser;
 import com.example.project3.Service.EmployeeService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,7 @@ private final EmployeeService employeeService;
 
 
     @GetMapping("get-emp")
-    public ResponseEntity getAllEmployees (@AuthenticationPrincipal Employee employee){
+    public ResponseEntity getAllEmployees (@AuthenticationPrincipal MyUser employee){
         return ResponseEntity.status(200).body(employeeService.getAll(employee.getId()));
     }
 
@@ -37,7 +38,7 @@ private final EmployeeService employeeService;
 
 
     @PutMapping("update")
-    public ResponseEntity updateEmployee(@AuthenticationPrincipal Employee employee , @Valid @RequestBody EmployeeDTO new_emp ){
+    public ResponseEntity updateEmployee(@AuthenticationPrincipal MyUser employee , @Valid @RequestBody EmployeeDTO new_emp ){
         employeeService.updateEmployee(employee.getId(),new_emp);
         return ResponseEntity.status(200).body(new ApiResponse("the employee has been updated successfully "));
     }
@@ -45,20 +46,20 @@ private final EmployeeService employeeService;
 
 
     @DeleteMapping("delete")
-    public ResponseEntity deleteEmployee(@AuthenticationPrincipal Employee employee ){
+    public ResponseEntity deleteEmployee(@AuthenticationPrincipal MyUser employee ){
         employeeService.deleteEmployee(employee.getId());
         return ResponseEntity.status(200).body(new ApiResponse("the employee has been deleted successfully "));
     }
 
     @PutMapping("activate/{customerId}/{accountId}")
-    public ResponseEntity activateAccount(@AuthenticationPrincipal Employee employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
+    public ResponseEntity activateAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
         employeeService.activateAccount(employee.getId(),customerId,accountId);
         return ResponseEntity.status(200).body(new ApiResponse("the account  has been activated successfully "));
     }
 
 
     @PutMapping("block/{customerId}/{accountId}")
-    public ResponseEntity blockAccount(@AuthenticationPrincipal Employee employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
+    public ResponseEntity blockAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
         employeeService.blockAccount(employee.getId(),customerId,accountId);
         return ResponseEntity.status(200).body(new ApiResponse("the account has been blocked "));
     }

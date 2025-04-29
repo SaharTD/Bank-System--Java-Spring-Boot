@@ -27,14 +27,23 @@ public class AccountService {
 
 
 
-
     public List<Account> getAllAccounts(Integer EmployeeId){
         return accountRepository.findAll();
     }
 
-    public Account getMyAccount(Integer customerId){
-        return accountRepository.findAccountByCustomer_Id(customerId);
+    /// get all customers account details
+    public List<Account> getMyAccount(Integer customerId){
+        Customer customer = customerRepository.findCustomerById(customerId);
+        return accountRepository.findAccountByCustomer(customer);
     }
+    /// get  customers single account by id an customer object details
+    public Account getOneAccount(Integer customerId, Integer accountId){
+        Customer customer = customerRepository.findCustomerById(customerId);
+        return accountRepository.findAccountByIdAndCustomer(accountId,customer);
+    }
+
+
+
 
     public void addAccount(Integer customerId,Account account) {
 
@@ -45,6 +54,7 @@ if (customer==null){
 }
 
 account.setCustomer(customer);
+account.setIsActive(false);
 accountRepository.save(account);
 
     }
@@ -57,16 +67,11 @@ accountRepository.save(account);
         if (customer==null){
             throw new ApiException("the customer is not found");
         }
-        Account account1= accountRepository.findAccountById(accountId);
+        Account account1= accountRepository.findAccountByIdAndCustomer(accountId,customer);
 
 
         if (account1==null){
             throw new ApiException("the account is not found");
-        }
-
-        if (account1.getCustomer().getId()!=customerId){
-            throw new ApiException("The account does not belong to this customer");
-
         }
 
 
@@ -81,7 +86,7 @@ accountRepository.save(account);
         if (customer==null){
             throw new ApiException("the customer is not found");
         }
-        Account account1= accountRepository.findAccountById(accountId);
+        Account account1= accountRepository.findAccountByIdAndCustomer(accountId,customer);
 
 
         if (account1==null){
@@ -91,9 +96,6 @@ accountRepository.save(account);
             throw new ApiException("the account is blocked");
         }
 
-        if (account1.getCustomer().getId()!=customerId){
-            throw new ApiException("The account does not belong to this customer");
-        }
 
         if (account1.getBalance()<amount){
             throw new ApiException("Insufficient balance ");
@@ -117,7 +119,7 @@ accountRepository.save(account);
         if (customer==null){
             throw new ApiException("the customer is not found");
         }
-        Account account1= accountRepository.findAccountById(accountId);
+        Account account1= accountRepository.findAccountByIdAndCustomer(accountId,customer);
 
 
         if (account1==null){
@@ -127,9 +129,7 @@ accountRepository.save(account);
             throw new ApiException("the account is blocked");
         }
 
-        if (account1.getCustomer().getId()!=customerId){
-            throw new ApiException("The account does not belong to this customer");
-        }
+
 
         if (amount<=0){
             throw new ApiException("Add a positive amount ");
@@ -148,7 +148,7 @@ accountRepository.save(account);
         if (customer==null){
             throw new ApiException("the customer is not found");
         }
-        Account account1= accountRepository.findAccountById(mainAccountId);
+        Account account1= accountRepository.findAccountByIdAndCustomer(mainAccountId,customer);
 
 
         if (account1==null){
@@ -156,11 +156,6 @@ accountRepository.save(account);
         }
         if (!account1.getIsActive()){
             throw new ApiException("the account is blocked");
-
-        }
-
-        if (account1.getCustomer().getId()!=customerId){
-            throw new ApiException("The account does not belong to this customer");
 
         }
 
