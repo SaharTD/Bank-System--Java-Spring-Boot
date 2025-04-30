@@ -3,7 +3,6 @@ package com.example.project3.Controller;
 
 import com.example.project3.Api.ApiResponse;
 import com.example.project3.DTO.EmployeeDTO;
-import com.example.project3.Model.Employee;
 import com.example.project3.Model.MyUser;
 import com.example.project3.Service.EmployeeService;
 import jakarta.validation.Valid;
@@ -51,16 +50,16 @@ private final EmployeeService employeeService;
         return ResponseEntity.status(200).body(new ApiResponse("the employee has been deleted successfully "));
     }
 
-    @PutMapping("activate/{customerId}/{accountId}")
-    public ResponseEntity activateAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
-        employeeService.activateAccount(employee.getId(),customerId,accountId);
+    @PutMapping("activate/{accountId}")
+    public ResponseEntity activateAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer accountId){
+        employeeService.activateAccount(employee.getId(),accountId);
         return ResponseEntity.status(200).body(new ApiResponse("the account  has been activated successfully "));
     }
 
 
-    @PutMapping("block/{customerId}/{accountId}")
-    public ResponseEntity blockAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer customerId, @PathVariable Integer accountId){
-        employeeService.blockAccount(employee.getId(),customerId,accountId);
+    @PutMapping("block/{accountId}")
+    public ResponseEntity blockAccount(@AuthenticationPrincipal MyUser employee , @PathVariable Integer accountId){
+        employeeService.blockAccount(employee.getId(),accountId);
         return ResponseEntity.status(200).body(new ApiResponse("the account has been blocked "));
     }
 
